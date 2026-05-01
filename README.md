@@ -149,8 +149,9 @@ parameter CLOCK_RATE = 16_000_000;  // match your FPGA board clock
 parameter BAUD_RATE  = 100_000;       // change to desired baud rate
 ```
 ---
-```text
+
 ## Scoreboard
+```text
 ============ Scoreboard Summary ============
 PASS : 1000
 FAIL : 0
