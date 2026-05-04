@@ -30,7 +30,15 @@ This repository contains a full UVM verification environment for a parameterisab
 The testbench uses a **loopback topology** — the `tx` output of the DUT is wired back to its own `rx` input — allowing end-to-end verification of both paths simultaneously with a single TB.
 
 ---
+## UVM Testbench Architecture
 
+The diagram below shows the full structure of the verification environment — 
+how stimulus flows from test scenarios down through agents to the hardware, 
+and how results flow back up through the scoreboard.
+
+![UVM Verification Architecture](images/architecture_diag.svg)
+
+---
 ## DUT Architecture
 
 ```
@@ -127,7 +135,7 @@ Coverage percentages are reported at end of simulation:
 
 ---
 
-Key signals to probe:
+### Key signals to probe:
 
 | Signal             | Description                          |
 |--------------------|--------------------------------------|

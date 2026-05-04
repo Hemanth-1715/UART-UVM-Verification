@@ -1,0 +1,193 @@
+<svg width="950" height="850" viewBox="0 0 950 850" xmlns="http://www.w3.org/2000/svg">
+  <!-- Global Styles & Defs -->
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333" />
+    </marker>
+    <marker id="tlm-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0056b3" />
+    </marker>
+    <marker id="result-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2e7d32" />
+    </marker>
+    <style>
+      .title       { font-family: 'Segoe UI', Arial, sans-serif; font-size: 22px; font-weight: bold; fill: #111; }
+      .label-bold  { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; fill: #000; }
+      .label       { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #333; }
+      .label-sm    { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #555; }
+      .tlm-label   { font-family: 'Courier New', monospace; font-size: 12px; fill: #0056b3; font-weight: bold; }
+      .result-label{ font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #2e7d32; font-weight: bold; }
+      .box-env     { fill: #f8f9fa; stroke: #6c757d; stroke-width: 2; stroke-dasharray: 4; }
+      .box-agent   { fill: #e9ecef; stroke: #495057; stroke-width: 2; }
+      .box-comp    { fill: #ffffff; stroke: #343a40; stroke-width: 1.5; }
+      .box-hw      { fill: #e3f2fd; stroke: #0d47a1; stroke-width: 2; }
+      .box-seq     { fill: #fff8e1; stroke: #f57f17; stroke-width: 1.5; }
+      .box-result  { fill: #f1f8e9; stroke: #2e7d32; stroke-width: 2; }
+      .line-solid  { stroke: #333; stroke-width: 2; fill: none; }
+      .line-tlm    { stroke: #0056b3; stroke-width: 2; stroke-dasharray: 5,5; fill: none; }
+      .line-result { stroke: #2e7d32; stroke-width: 2; fill: none; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff" />
+
+  <!-- Title -->
+  <text x="475" y="40" text-anchor="middle" class="title">UVM Verification Architecture: UART Controller</text>
+
+  <!-- ================= UVM TEST & ENV ================= -->
+  <!-- UVM Test Boundary — expanded to y=590 to accommodate seq boxes -->
+  <rect x="30" y="70" width="890" height="540" fill="none" stroke="#212529" stroke-width="2" rx="10" />
+  <text x="45" y="95" class="label-bold">uvm_test (uart_base_test / random / directed)</text>
+
+  <!-- UVM Env Boundary -->
+  <rect x="50" y="110" width="850" height="480" class="box-env" />
+  <text x="65" y="135" class="label-bold">uvm_env (uart_env)</text>
+
+  <!-- ================= TX AGENT (Left) — shifted down 60px, agent box grown ================= -->
+  <rect x="80" y="155" width="220" height="415" class="box-agent" rx="6" />
+  <text x="190" y="178" text-anchor="middle" class="label-bold">uart_tx_agent (UVM_ACTIVE)</text>
+
+  <!-- NEW: Sequence Library box inside TX agent -->
+  <rect x="110" y="188" width="160" height="60" class="box-seq" rx="4" />
+  <text x="190" y="208" text-anchor="middle" class="label-bold">Sequence library</text>
+  <text x="190" y="223" text-anchor="middle" class="label-sm">uart_base_seq</text>
+  <text x="190" y="237" text-anchor="middle" class="label-sm">uart_directed_seq · uart_reset_seq</text>
+
+  <!-- Arrow: seq lib → sequencer -->
+  <path d="M 190 248 L 190 308" class="line-solid" marker-end="url(#arrow)" />
+
+  <!-- uvm_sequencer (shifted down 60px from original y=210 → y=270) -->
+  <rect x="115" y="310" width="150" height="50" class="box-comp" rx="4" />
+  <text x="190" y="328" text-anchor="middle" class="label-bold">uvm_sequencer</text>
+  <text x="190" y="345" text-anchor="middle" class="label">Generates TX Items</text>
+
+  <!-- seq_item_port label + arrow (shifted) -->
+  <path d="M 190 360 L 190 397" class="line-solid" marker-end="url(#arrow)" />
+  <text x="195" y="375" class="tlm-label">seq_item_port</text>
+
+  <!-- uart_tx_driver (shifted from y=300 → y=360) -->
+  <rect x="115" y="398" width="150" height="50" class="box-comp" rx="4" />
+  <text x="190" y="415" text-anchor="middle" class="label-bold">uart_tx_driver</text>
+  <text x="190" y="435" text-anchor="middle" class="label">Drives 'in', 'txStart'</text>
+
+  <!-- vif.tx_cb label (shifted) -->
+  <text x="195" y="478" class="label" fill="#000">vif.tx_cb</text>
+
+  <!-- uart_tx_monitor (shifted from y=450 → y=508) -->
+  <rect x="115" y="508" width="150" height="50" class="box-comp" rx="4" />
+  <text x="190" y="531" text-anchor="middle" class="label-bold">uart_tx_monitor</text>
+  <text x="190" y="547" text-anchor="middle" class="label">Captures TX Data</text>
+
+  <!-- ================= RX AGENT (Right) — shifted down 60px, agent box grown ================= -->
+  <rect x="650" y="155" width="220" height="415" class="box-agent" rx="6" />
+  <text x="760" y="178" text-anchor="middle" class="label-bold">uart_rx_agent (UVM_ACTIVE)</text>
+
+  <!-- NEW: Sequence Library box inside RX agent -->
+  <rect x="680" y="188" width="160" height="60" class="box-seq" rx="4" />
+  <text x="760" y="208" text-anchor="middle" class="label-bold">Sequence library</text>
+  <text x="760" y="223" text-anchor="middle" class="label-sm">uart_base_seq</text>
+  <text x="760" y="237" text-anchor="middle" class="label-sm">uart_directed_seq · uart_reset_seq</text>
+
+  <!-- Arrow: seq lib → sequencer -->
+  <path d="M 760 248 L 760 308" class="line-solid" marker-end="url(#arrow)" />
+
+  <!-- uvm_sequencer (shifted) -->
+  <rect x="685" y="310" width="150" height="50" class="box-comp" rx="4" />
+  <text x="760" y="328" text-anchor="middle" class="label-bold">uvm_sequencer</text>
+  <text x="760" y="345" text-anchor="middle" class="label">Generates RX Items</text>
+
+  <!-- seq_item_port label + arrow (shifted) -->
+  <path d="M 760 360 L 760 397" class="line-solid" marker-end="url(#arrow)" />
+  <text x="765" y="373" class="tlm-label">seq_item_port</text>
+
+  <!-- uart_rx_driver (shifted) -->
+  <rect x="685" y="398" width="150" height="50" class="box-comp" rx="4" />
+  <text x="760" y="415" text-anchor="middle" class="label-bold">uart_rx_driver</text>
+  <text x="760" y="435" text-anchor="middle" class="label">Drives 'rxEn', 'rx'</text>
+
+  <!-- vif.rx_cb label (shifted) -->
+  <text x="765" y="478" class="label" fill="#000">vif.rx_cb</text>
+
+  <!-- uart_rx_monitor (shifted) -->
+  <rect x="685" y="508" width="150" height="50" class="box-comp" rx="4" />
+  <text x="760" y="531" text-anchor="middle" class="label-bold">uart_rx_monitor</text>
+  <text x="760" y="547" text-anchor="middle" class="label">Captures RX Data/Errors</text>
+
+  <!-- ================= SCOREBOARD & COVERAGE (Centre) ================= -->
+  <!-- Scoreboard (kept at original y=160) -->
+  <rect x="360" y="160" width="240" height="130" class="box-comp" rx="4" />
+  <text x="480" y="183" text-anchor="middle" class="label-bold">uart_scoreboard</text>
+
+  <rect x="380" y="198" width="80" height="30" fill="#f1f3f5" stroke="#ced4da" rx="3" />
+  <text x="420" y="217" text-anchor="middle" class="label">tx_fifo</text>
+
+  <rect x="500" y="198" width="80" height="30" fill="#f1f3f5" stroke="#ced4da" rx="3" />
+  <text x="540" y="217" text-anchor="middle" class="label">rx_fifo</text>
+
+  <text x="480" y="255" text-anchor="middle" class="label">Compares Sent vs Received</text>
+  <text x="480" y="272" text-anchor="middle" class="label">Checks Framing Errors</text>
+
+  <!-- Pass/Fail result box — directly below scoreboard with small gap -->
+  <rect x="380" y="350" width="200" height="65" class="box-result" rx="6" />
+  <text x="480" y="370" text-anchor="middle" class="label-bold" fill="#2e7d32">report_phase output</text>
+  <text x="480" y="388" text-anchor="middle" class="label" fill="#2e7d32">✓ PASS / ✗ FAIL</text>
+  <text x="480" y="405" text-anchor="middle" class="label-sm" fill="#2e7d32">Printed at end of simulation</text>
+
+  <!-- Arrow: scoreboard → pass/fail (clean straight vertical, 20px gap) -->
+  <path d="M 480 290 L 480 348" class="line-result" marker-end="url(#result-arrow)" />
+  <text x="486" y="324" class="result-label">report_phase</text>
+
+  <!-- Coverage — moved below Pass/Fail -->
+  <rect x="360" y="430" width="240" height="90" class="box-comp" rx="4" />
+  <text x="480" y="460" text-anchor="middle" class="label-bold">uart_coverage (uvm_subscriber)</text>
+  <text x="480" y="484" text-anchor="middle" class="label">tx_cg (Sent Data Distribution)</text>
+  <text x="480" y="505" text-anchor="middle" class="label">rx_cg (Received Data &amp; Errors)</text>
+
+  <!-- ================= TLM CONNECTIONS (shifted to match new monitor y positions) ================= -->
+  <!-- TX Monitor AP → Scoreboard tx_fifo -->
+  <path d="M 265 533 L 320 533 L 320 213 L 360 213" class="line-tlm" marker-end="url(#tlm-arrow)" />
+  <!-- TX Monitor AP → Coverage (y=440 = centre of coverage box) -->
+  <path d="M 320 480 L 360 480" class="line-tlm" marker-end="url(#tlm-arrow)" />
+  <text x="470" y="14" class="tlm-label" transform="rotate(-90, 570, 270)">ap.write()</text>
+
+  <!-- RX Monitor AP → Scoreboard rx_fifo -->
+  <path d="M 685 533 L 630 533 L 630 213 L 600 213" class="line-tlm" marker-end="url(#tlm-arrow)" />
+  <!-- RX Monitor AP → Coverage (y=440 = centre of coverage box) -->
+  <path d="M 630 480 L 600 480" class="line-tlm" marker-end="url(#tlm-arrow)" />
+  <text x="790" y="530" class="tlm-label" transform="rotate(-90, 635, 523)">ap.write()</text>
+
+  <!-- ================= HARDWARE LEVEL (shifted down 60px) ================= -->
+  <!-- Virtual Interface (shifted from y=600 → y=660) -->
+  <rect x="80" y="660" width="790" height="40" class="box-hw" rx="4" />
+  <text x="475" y="685" text-anchor="middle" class="label-bold">uart_if (Virtual Interface inside tb_top)</text>
+
+  <!-- DUT (shifted from y=670 → y=730) -->
+  <rect x="355" y="730" width="240" height="75" class="box-hw" fill="#bbdefb" rx="6" />
+  <text x="475" y="754" text-anchor="middle" class="title" style="font-size:16px;">UART DUT (Uart8)</text>
+  <text x="475" y="773" text-anchor="middle" class="label">Hardware Controller</text>
+  <!-- NEW: BaudRateGenerator sub-label -->
+  <text x="475" y="795" text-anchor="middle" class="label-sm" fill="#0d47a1">incl. BaudRateGenerator (16× RX oversample)</text>
+
+  <!-- Driver → Interface connections (shifted) -->
+  <path d="M 190 448 L 190 660" class="line-solid" marker-end="url(#arrow)" />
+  <path d="M 760 448 L 760 660" class="line-solid" marker-end="url(#arrow)" />
+
+  <!-- Interface → Monitor connections (shifted) -->
+  <path d="M 150 660 L 150 558" class="line-solid" marker-end="url(#arrow)" />
+  <text x="85" y="605" class="label" fill="#000">vif.mon_cb</text>
+
+  <path d="M 720 660 L 720 558" class="line-solid" marker-end="url(#arrow)" />
+  <text x="650" y="605" class="label" fill="#000">vif.mon_cb</text>
+
+  <!-- Interface → DUT connections (shifted) -->
+  <path d="M 450 700 L 450 730" class="line-solid" marker-end="url(#arrow)" />
+  <path d="M 500 730 L 500 700" class="line-solid" marker-end="url(#arrow)" />
+  <text x="335" y="722" class="label-bold">txEn, txStart, in</text>
+  <text x="512" y="722" class="label-bold">out, rxDone, rxErr</text>
+
+  <!-- Loopback indicator (shifted) -->
+  <path d="M 595 755 C 625 755, 625 775, 595 775" fill="none" stroke="#d32f2f" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="632" y="770" class="label-bold" fill="#d32f2f">Loopback (tx -&gt; rx)</text>
+
+</svg>
