@@ -7,6 +7,7 @@ A complete **UVM (Universal Verification Methodology)** testbench for an 8-bit U
 ## Table of Contents
 
 - [Overview](#overview)
+- [UVM Testbench Architecture](#uvm-testbench-architecture)
 - [DUT Architecture](#dut-architecture)
 - [Features](#features)
 - [Getting Started](#getting-started)
